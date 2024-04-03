@@ -4,7 +4,7 @@ const request = require('../../request');
 Component({
   behaviors: [
     useQuery({
-      queryKey: ['mock'],
+      queryKey: ['mock', { c: '1', a: '2' }],
       queryFn: () =>
         request({
           url: '/mock',
@@ -12,4 +12,9 @@ Component({
         }),
     }),
   ],
+  lifetimes: {
+    attached() {
+      console.log(this);
+    },
+  },
 });

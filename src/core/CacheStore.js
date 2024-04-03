@@ -1,16 +1,24 @@
+const DEFAULT_STALE_TIME = 0;
+
+const DEFAULT_CACHE_TIME = 5 * 60 * 1000;
+
 export class CacheStore {
-  constructor({ staleTime = 0, cacheTime = 5 * 60 * 1000 } = {}) {
-    this.staleTime = staleTime;
-    this.cacheTime = cacheTime;
-    this.store = new Map();
+  #staleTime;
+  #cacheTime;
+  #store;
+
+  constructor(options = {}) {
+    this.#staleTime = options.staleTime ?? DEFAULT_STALE_TIME;
+    this.#cacheTime = options.cacheTime ?? DEFAULT_CACHE_TIME;
+    this.#store = new Map();
   }
 
-  set(key, value, options) {
-    const { staleTime = this.staleTime, cacheTime = this.cacheTime } = options ?? {};
+  set(key, value, options = {}) {
+    const { staleTime = this.#staleTime, cacheTime = this.#cacheTime } = options;
 
     this.gc();
 
-    return this.store.set(key, {
+    return this.#store.set(key, {
       value,
       lastModify: Date.now(),
       cacheTime,
@@ -20,7 +28,7 @@ export class CacheStore {
   }
 
   get(key) {
-    const value = this.store.get(key);
+    const value = this.#store.get(key);
 
     if (value) {
       value.stale = Date.now() - value.lastModify >= value.staleTime;
@@ -30,11 +38,11 @@ export class CacheStore {
   }
 
   has(key) {
-    return this.store.has(key);
+    return this.#store.has(key);
   }
 
   delete(key) {
-    return this.store.delete(key);
+    return this.#store.delete(key);
   }
 
   gc() {
