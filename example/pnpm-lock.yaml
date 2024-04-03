@@ -1,0 +1,24 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  daigo:
+    specifier: ^1.2.0
+    version: 1.2.0
+  kaneki:
+    specifier: file:..
+    version: file:..
+
+packages:
+
+  /daigo@1.2.0:
+    resolution: {integrity: sha512-O5PrAys1VPvtMzkx4clPBZ2Qh2/nj7OCmpOb/XUxG4epEqxoNkojRehbusnGXU3FYwR2vMsoXJjsRlkDNpVHTQ==}
+    dev: false
+
+  file:..:
+    resolution: {directory: .., type: directory}
+    name: kaneki
+    dev: false

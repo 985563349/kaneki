@@ -1,0 +1,18 @@
+<!--index.wxml-->
+<navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+
+<view class="container">
+  <view wx:if="{{ isPending }}">loading...</view>
+
+  <view wx:elif="{{ isError }}">error</view>
+
+  <view wx:else>
+    <view>
+      <view wx:for="{{ data.projects }}">{{ item.address }}</view>
+    </view>
+
+    <view wx:if="{{ isFetching }}">updating...</view>
+
+    <button bind:tap="refetch">refetch</button>
+  </view>
+</view>
